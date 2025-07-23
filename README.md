@@ -85,6 +85,22 @@ O repositório está organizado por módulos, com pastas dedicadas a cada tópic
 
 ---
 
+## 📚 Referências Bibliográficas e Recursos Úteis
+
+Aqui estão alguns recursos que utilizei durante o Bootcamp e que podem ser úteis para aprofundar seus conhecimentos:
+
+### **Documentações Oficiais**
+- [Explore Speech Studio - Laboratório no Microsoft Learning](https://learn.microsoft.com/)
+- [Analyze text with Language Studio - Laboratório no Microsoft Learning](https://learn.microsoft.com/)
+
+### **Materiais Complementares sobre GitHub**
+- [GitHub Quick Start - Repositório com Link para Aulas de Git e GitHub](https://github.com/)
+- [GitBook: Formação GitHub Certification - Material textual sobre GitHub](https://gitbook.com/)
+- [Documentação do GitHub - Guia completo para uso do GitHub](https://docs.github.com/)
+- [GitHub Markdown - Guia específico para Markdown no GitHub](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github)
+
+---
+
 ## 🌟 Por Que Este Repositório?
 
 Este repositório reflete meu progresso ao longo do Bootcamp. Ele serve como um portfólio pessoal, demonstrando minhas habilidades em tecnologia, análise de dados e inteligência artificial. Além disso, pode ser útil para outros alunos que estejam buscando exemplos práticos ou precisem de inspiração para seus próprios projetos.
