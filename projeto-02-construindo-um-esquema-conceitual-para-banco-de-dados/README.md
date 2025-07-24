@@ -1,6 +1,6 @@
 # **Sistema de Gerenciamento de Oficina Mecânica**
 
-Este projeto consiste em um modelo de banco de dados para um sistema de controle e gerenciamento de ordens de serviço em uma oficina mecânica. O sistema permite registrar clientes, veículos, mecânicos, serviços, peças e ordens de serviço, além de controlar o estoque e o status das ordens.
+Este projeto consiste em um modelo de banco de dados para um sistema de controle e gerenciamento de ordens de serviço (OS) em uma oficina mecânica. O sistema permite registrar clientes, veículos, mecânicos, serviços, peças e ordens de serviço, além de controlar o estoque e o status das OS.
 
 ---
 
@@ -19,7 +19,7 @@ Este projeto consiste em um modelo de banco de dados para um sistema de controle
 
 ## **Visão Geral**
 
-O objetivo deste projeto é fornecer uma estrutura robusta e bem planejada para o gerenciamento de uma oficina mecânica. O modelo inclui tabelas para clientes, veículos, mecânicos, serviços, peças, ordens de serviço, pagamentos e controle de estoque. Ele foi projetado para ser escalável e flexível, permitindo futuras expansões.
+O objetivo deste projeto é fornecer uma estrutura robusta para o gerenciamento de uma oficina mecânica. O modelo inclui tabelas para clientes, veículos, mecânicos, serviços, peças, ordens de serviço, pagamentos e controle de estoque. Ele foi projetado para ser escalável e flexível, permitindo futuras expansões.
 
 ---
 
@@ -27,9 +27,11 @@ O objetivo deste projeto é fornecer uma estrutura robusta e bem planejada para 
 
 1. **Clientes**: Podem cadastrar seus dados e seus veículos.
 2. **Veículos**: Cada veículo é vinculado a um cliente e pode passar por revisões ou reparos.
-3. **Ordens de Serviço**: Cada ordem de serviço inclui informações sobre os serviços e peças necessárias, além de data de entrega e status.
-4. **Mecânicos**: Cada ordem de serviço é designada a uma equipe de mecânicos.
-5. **Peças**: O sistema controla o estoque de peças e registra seu uso em ordens de serviço.
+3. **Ordens de Serviço (OS)**:
+   - Incluem informações sobre os serviços e peças necessárias, além de data de entrega e status.
+   - O valor total é calculado com base em uma tabela de referência de mão-de-obra.
+4. **Mecânicos**: Cada OS é designada a uma equipe de mecânicos.
+5. **Peças**: O sistema controla o estoque de peças e registra seu uso em OS.
 6. **Pagamentos**: Os pagamentos são registrados e podem ser realizados por diferentes métodos.
 
 ---
@@ -56,11 +58,11 @@ O diagrama ER (Entidade-Relacionamento) pode ser visualizado abaixo:
 
 #### **Mechanic**
 - Gerencia os mecânicos da oficina.
-- **Campos**: `mechanic_id`, `name`, `phone`, `specialization`, `created_at`.
+- **Campos**: `mechanic_id`, `code`, `name`, `address`, `specialization`, `created_at`.
 
-#### **Service**
-- Lista os serviços oferecidos pela oficina.
-- **Campos**: `service_id`, `description`, `price`, `estimated_time`, `created_at`.
+#### **ServiceReference**
+- Lista os serviços oferecidos pela oficina com preços de referência.
+- **Campos**: `service_ref_id`, `description`, `labor_cost`, `estimated_time`, `created_at`.
 
 ---
 
@@ -68,15 +70,15 @@ O diagrama ER (Entidade-Relacionamento) pode ser visualizado abaixo:
 
 #### **WorkOrder**
 - Representa as ordens de serviço criadas para os veículos.
-- **Campos**: `work_order_id`, `vehicle_id`, `customer_id`, `status`, `entry_date`, `delivery_date`, `total_amount`, `notes`, `created_at`.
+- **Campos**: `work_order_id`, `vehicle_id`, `customer_id`, `issue_description`, `authorization_status`, `total_amount`, `status`, `issue_date`, `delivery_date`, `created_at`.
 
 #### **WorkOrderTeam**
-- Associa uma equipe de mecânicos a uma ordem de serviço.
+- Associa uma equipe de mecânicos a uma OS.
 - **Campos**: `team_id`, `work_order_id`, `mechanic_id`, `assigned_at`.
 
 #### **WorkOrderItem**
-- Detalha os serviços realizados em uma ordem de serviço.
-- **Campos**: `item_id`, `work_order_id`, `service_id`, `quantity`, `unit_price`, `subtotal`, `completed_at`.
+- Detalha os serviços realizados em uma OS.
+- **Campos**: `item_id`, `work_order_id`, `service_ref_id`, `quantity`, `unit_price`, `subtotal`, `completed_at`.
 
 ---
 
@@ -87,7 +89,7 @@ O diagrama ER (Entidade-Relacionamento) pode ser visualizado abaixo:
 - **Campos**: `part_id`, `description`, `stock_quantity`, `unit_price`, `created_at`.
 
 #### **WorkOrderPart**
-- Registra as peças utilizadas em uma ordem de serviço.
+- Registra as peças utilizadas em uma OS.
 - **Campos**: `usage_id`, `work_order_id`, `part_id`, `quantity`, `unit_price`, `subtotal`, `used_at`.
 
 #### **Payment**
@@ -95,27 +97,18 @@ O diagrama ER (Entidade-Relacionamento) pode ser visualizado abaixo:
 - **Campos**: `payment_id`, `work_order_id`, `amount`, `payment_method`, `payment_date`.
 
 #### **WorkOrderStatusHistory**
-- Rastreia as alterações de status de uma ordem de serviço.
+- Rastreia as alterações de status de uma OS.
 - **Campos**: `status_history_id`, `work_order_id`, `status`, `updated_at`.
 
 ---
 
 ## **Funcionalidades Implementadas**
 
-1. **Cadastro de Clientes e Veículos**:
-   - Permite registrar clientes e seus respectivos veículos.
-
-2. **Gestão de Mecânicos**:
-   - Facilita o cadastro e alocação de mecânicos em ordens de serviço.
-
-3. **Criação de Ordens de Serviço**:
-   - Gera ordens de serviço com informações sobre os serviços e peças necessárias.
-
-4. **Controle de Estoque de Peças**:
-   - Gerencia o estoque de peças e rastreia seu uso em ordens de serviço.
-
-5. **Histórico de Status**:
-   - Mantém um registro detalhado das alterações de status de cada ordem de serviço.
-
-6. **Pagamentos**:
-   - Registra os pagamentos efetuados pelos clientes, com suporte para diferentes métodos de pagamento
+1. **Cadastro de Clientes e Veículos**.
+2. **Gestão de Mecânicos**.
+3. **Criação de Ordens de Serviço (OS)**.
+4. **Consulta de Valores de Mão-de-Obra**.
+5. **Controle de Estoque de Peças**.
+6. **Autorização de Serviços**.
+7. **Pagamentos**.
+8. **Histórico de Status**.
