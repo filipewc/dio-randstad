@@ -38,7 +38,7 @@ O objetivo deste projeto é fornecer uma estrutura robusta e bem planejada para 
 
 O diagrama ER (Entidade-Relacionamento) pode ser visualizado abaixo:
 
-![Diagrama ER]()
+![Diagrama ER](https://github.com/filipewc/dio-randstad/blob/main/projeto-01-refinando-um-projeto-conceitual-de-banco-de-dados-e-commerce/diargama-er-projeto-ecommerce.png)
 
 ---
 
