@@ -1,6 +1,6 @@
 # **Projeto de Banco de Dados para o Ramo de Telecomunicações**
 
-Este documento descreve as etapas realizadas para configurar um banco de dados PostgreSQL voltado ao ramo de telecomunicações. O objetivo do projeto é criar uma estrutura organizada para gerenciar vendas e instalações de internet, incluindo clientes, planos, técnicos, vendedores e equipamentos.
+Este documento descreve as etapas realizadas para configurar um banco de dados PostgreSQL voltado ao ramo de telecomunicações. O objetivo do projeto é criar uma estrutura organizada para gerenciar vendas e instalações de internet, incluindo clientes, planos, técnicos, vendedores, equipamentos, upgrades de planos, serviços adicionais (SVAs) e a jornada completa do cliente dentro da empresa.
 
 ---
 
@@ -16,6 +16,9 @@ Antes de iniciar a configuração, foi realizado um planejamento detalhado para 
 - **Controle de equipamentos**: Gerenciar os equipamentos fornecidos aos clientes, como roteadores e modems.
 - **Ordens de serviço**: Registrar solicitações de suporte técnico ou manutenção.
 - **Relatórios de desempenho**: Gerar relatórios sobre as atividades dos técnicos e vendedores.
+- **Upgrades de Planos**: Acompanhar mudanças nos planos dos clientes, como upgrades ou downgrades.
+- **Serviços Adicionais (SVAs)**: Gerenciar serviços complementares, como antivírus, backup em nuvem e suporte técnico prioritário.
+- **Relatórios da Vida do Cliente**: Registrar as etapas que o cliente passa dentro da empresa, desde a contratação até o cancelamento.
 
 ---
 
@@ -27,16 +30,19 @@ Para implementar o banco de dados, foi utilizado o PostgreSQL, um sistema de ger
    - Um novo banco de dados foi criado no PostgreSQL para armazenar todas as tabelas e dados relacionados ao sistema de telecomunicações.
 
 2. **Definição das Tabelas**:
-   - Foram criadas tabelas para representar as entidades principais do sistema, como clientes, planos, vendas, técnicos, instalações, pagamentos, equipamentos, ordens de serviço e relatórios.
+   - Foram criadas tabelas para representar as entidades principais do sistema, como clientes, planos, vendas, técnicos, instalações, pagamentos, equipamentos, ordens de serviço, relatórios, upgrades de planos, SVAs e a jornada do cliente.
 
 3. **Estabelecimento de Relacionamentos**:
    - Os relacionamentos entre as tabelas foram definidos para garantir a integridade dos dados. Por exemplo:
      - Uma venda está associada a um cliente e a um plano.
      - Uma instalação está vinculada a uma venda e a um técnico.
      - Equipamentos são atribuídos a clientes durante as instalações.
+     - Upgrades de planos estão vinculados às vendas originais.
+     - Serviços adicionais (SVAs) são associados às vendas.
+     - A tabela `CustomerJourney` registra todos os eventos importantes na vida do cliente.
 
 4. **Inserção de Dados de Teste**:
-   - Foram inseridos dados fictícios nas tabelas principais para permitir a realização de testes e validações. Isso inclui clientes, planos, vendas, técnicos, instalações e outros registros.
+   - Foram inseridos dados fictícios nas tabelas principais para permitir a realização de testes e validações. Isso inclui clientes, planos, vendas, técnicos, instalações, upgrades, SVAs, jornada do cliente e outros registros.
 
 ---
 
@@ -76,8 +82,19 @@ O sistema desenvolvido oferece as seguintes funcionalidades:
 7. **Ordens de Serviço**:
    - Registro de solicitações de suporte técnico ou manutenção, com detalhes sobre o problema e o técnico responsável.
 
-8. **Relatórios**:
-   - Geração de relatórios sobre as atividades dos técnicos e vendedores, como número de instalações concluídas e vendas realizadas.
+8. **Upgrades de Planos**:
+   - Acompanhamento de upgrades ou downgrades realizados pelos clientes, incluindo o plano anterior, o novo plano e o motivo da mudança.
+
+9. **Serviços Adicionais (SVAs)**:
+   - Gestão de serviços complementares, como antivírus, backup em nuvem e suporte técnico prioritário.
+   - Associação de SVAs às vendas, com controle de status (ativo ou cancelado).
+
+10. **Relatórios da Vida do Cliente**:
+    - Registro detalhado das etapas que o cliente passa dentro da empresa, como contratação, upgrades, instalações, pagamentos, ordens de serviço e cancelamentos.
+    - A tabela `CustomerJourney` permite acompanhar todas as interações do cliente com a empresa, desde a contratação inicial até o cancelamento.
+
+11. **Relatórios**:
+    - Geração de relatórios sobre as atividades dos técnicos, vendedores, upgrades realizados, SVAs contratados e a jornada completa do cliente.
 
 ---
 
@@ -88,11 +105,11 @@ Com a implementação deste banco de dados, o sistema oferece os seguintes benef
 - **Organização dos Dados**:
   - Todas as informações estão centralizadas e organizadas em tabelas relacionadas, facilitando o acesso e a manutenção.
 
-- **Acompanhamento de Atividades**:
-  - É possível acompanhar as vendas, instalações e manutenções em tempo real, garantindo maior eficiência operacional.
+- **Acompanhamento da Jornada do Cliente**:
+  - A tabela `CustomerJourney` permite acompanhar todas as interações do cliente com a empresa, desde a contratação até o cancelamento. Isso ajuda a identificar padrões de comportamento e melhorar a retenção de clientes.
 
 - **Relatórios Personalizados**:
-  - O sistema permite gerar relatórios detalhados sobre o desempenho dos técnicos e vendedores, auxiliando na tomada de decisões.
+  - O sistema permite gerar relatórios detalhados sobre o desempenho dos técnicos, vendedores, tendências de upgrades, SVAs contratados e a jornada completa do cliente.
 
 - **Escalabilidade**:
   - A estrutura do banco de dados foi projetada para ser escalável, permitindo a adição de novas funcionalidades conforme necessário.
@@ -119,4 +136,4 @@ Após a configuração inicial, os próximos passos incluem:
 
 ## **Conclusão**
 
-Este projeto demonstra como configurar um banco de dados PostgreSQL para gerenciar vendas e instalações de internet no ramo de telecomunicações. A estrutura desenvolvida é modular, escalável e capaz de atender às necessidades de um sistema de e-commerce no setor de telecom. Com a adição de vendedores e canais de atuação, o sistema agora oferece uma visão mais completa das operações comerciais e técnicas.
+Este projeto demonstra como configurar um banco de dados PostgreSQL para gerenciar vendas e instalações de internet no ramo de telecomunicações. Com a inclusão da tabela `CustomerJourney`, o sistema agora oferece uma visão completa da jornada do cliente dentro da empresa, registrando todas as interações importantes. A estrutura modular e escalável permite que o banco de dados atenda às necessidades atuais e futuras do negócio, garantindo maior eficiência e organização.
